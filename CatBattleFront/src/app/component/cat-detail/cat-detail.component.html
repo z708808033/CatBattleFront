@@ -1,0 +1,219 @@
+<div align="center">
+  <h2 class="title">喵咪详情</h2>
+  <div *ngIf="isAdmin">
+    <span *ngIf="isEdit">
+      <button class="btn btn-primary btn-sm" (click)="save()">保存</button>
+    </span>&nbsp;
+    <span *ngIf="isEdit">
+      <button class="btn btn-primary btn-sm" (click)="cancel()">取消</button>
+    </span>
+    <span *ngIf="!isEdit">
+      <button class="btn btn-primary btn-sm" (click)="beginEdit()">修改</button>
+    </span>
+  </div>
+</div>
+<div>
+  <table class="table table-bordered form-inline" *ngFor="let cat of cats;index as i;">
+    <tr *ngIf="i == 0" align="center">
+      <td>
+        <div>喵咪名称</div>
+      </td>
+      <td colspan="3">详细信息</td>
+    </tr>
+    <tr>
+      <td rowspan="8" align="center" style="width:300px">
+        <div>
+          <img [src]="cat.img">
+        </div>
+        <div>
+          <input *ngIf="isEdit;else CNBlock" class="form-control" [(ngModel)]="cat.catName">
+          <ng-template #CNBlock>
+            <span class="dataMsg">{{cat.catName}}</span>
+          </ng-template>
+        </div>
+        <div>
+          <input *ngIf="isEdit;else aliasBlock" class="form-control" [(ngModel)]="cat.alias" placeholder="别名" [style.width]="getGeneralWidth()">
+          <ng-template #aliasBlock>
+            <span class="dataMsg">{{cat.alias}}</span>
+          </ng-template>
+        </div>
+        <div>
+          <span class="dataMsg">
+            <select *ngIf="isEdit;else categoryBlock" class="form-control" [(ngModel)]="cat.category" (change)="onCatCategoryChange(i)">
+              <ng-container *ngFor="let catCategory of catCategories">
+                <option [value]="catCategory.category">{{catCategory.categoryDescribe}}</option>
+              </ng-container>
+            </select>
+            <ng-template #categoryBlock>
+              <a class="hyperlink" routerLink="/cat-list-data/category/{{cat.category}}">{{cat.categoryDescribe}}</a>
+            </ng-template>
+          </span>
+        </div>
+        <div>目前等级</div>
+        <div>
+          <ng-container *ngIf="isEdit;else currentLevelBlock">{{cat.currentLevel}}</ng-container>
+          <ng-template #currentLevelBlock>
+            <input type="number" class="form-control" [(ngModel)]="cat.currentLevel" [style.width]="getCLWidth()" (input)="resetCatAttackAndHP()">
+          </ng-template>
+        </div>
+        <div>默认等级</div>
+        <div>
+          <input *ngIf="isEdit;else DLBlock" class="form-control" [(ngModel)]="cat.defaultLevel" [style.width]="getGeneralWidth()">
+          <ng-template #DLBlock>
+            <span class="dataMsg">{{cat.defaultLevel}}</span>
+          </ng-template>
+        </div>
+        <div>最高等级</div>
+        <div>
+          <input *ngIf="isEdit;else MLBlock" class="form-control" [(ngModel)]="cat.maxLevel" [style.width]="getGeneralWidth()">
+          <ng-template #MLBlock>
+            <span class="dataMsg">{{cat.maxLevel}}</span>
+          </ng-template>
+        </div>
+      </td>
+      <td>
+        体力
+        <div *ngIf="isEdit;else hpBlock">
+          0级时候的体力为
+          <input type="number" class="form-control" [(ngModel)]="cat.basicHp" [style.width]="getBHWidth()">&nbsp;
+          <input type="number" class="form-control" [(ngModel)]="cat.hpLevel" [style.width]="getBHWidth()"> 级(包含本级)之前增幅为
+          <input type="number" class="form-control" [(ngModel)]="cat.hpBefore" [style.width]="getBHWidth()"> 之后增幅为
+          <input type="number" class="form-control" [(ngModel)]="cat.hpAfter" [style.width]="getBHWidth()">
+        </div>
+        <ng-template #hpBlock>
+          <span class="dataMsg">{{cat.currentHp}} （默认等级体力 {{cat.hp}}）</span>
+        </ng-template>
+      </td>
+      <td>
+        KB
+        <input *ngIf="isEdit;else kbBlock" type="number" class="form-control" [(ngModel)]="cat.kb" [style.width]="getGeneralWidth()">
+        <ng-template #kbBlock>
+          <span class="dataMsg">{{cat.kb}}</span>
+        </ng-template>
+      </td>
+      <td>攻速
+        <input *ngIf="isEdit;else ARBlock" class="form-control" [(ngModel)]="cat.attackRate" [style.width]="getGeneralWidth()">
+        <ng-template #ARBlock>
+          <span class="dataMsg">{{cat.attackRate}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        攻击力
+        <div *ngIf="isEdit;else attackBlock">
+          0级时候的攻击力为
+          <input type="number" class="form-control" [(ngModel)]="cat.basicAttack" [style.width]="getBAWidth()">&nbsp;
+          <input type="number" class="form-control" [(ngModel)]="cat.attackLevel" [style.width]="getBAWidth()"> 级(包含本级)之前增幅为
+          <input type="number" class="form-control" [(ngModel)]="cat.attackBefore" [style.width]="getBAWidth()"> 之后增幅为
+          <input type="number" class="form-control" [(ngModel)]="cat.attackAfter" [style.width]="getBAWidth()">
+        </div>
+        <ng-template #attackBlock>
+          <span class="dataMsg">{{cat.currentAttack}} （默认等级攻击力 {{cat.attack}}）</span>
+        </ng-template>
+      </td>
+      <td>速度
+        <input *ngIf="isEdit;else speedBlock" type="number" class="form-control" [(ngModel)]="cat.speed" [style.width]="getGeneralWidth()">
+        <ng-template #speedBlock>
+          <span class="dataMsg">{{cat.speed}}</span>
+        </ng-template>
+      </td>
+      <td>前摇
+        <input *ngIf="isEdit;else AABlock" class="form-control" [(ngModel)]="cat.attackAnimation" [style.width]="getGeneralWidth()">
+        <ng-template #AABlock>
+          <span class="dataMsg">{{cat.attackAnimation}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td style="width:900px">DPS
+        <span class="dataMsg">{{cat.dps}}</span>
+      </td>
+      <td>射程
+        <input *ngIf="isEdit;else ADBlock" type="number" class="form-control" [(ngModel)]="cat.attackDistance" [style.width]="getGeneralWidth()">
+        <ng-template #ADBlock>
+          <span class="dataMsg">{{cat.attackDistance}}</span>
+        </ng-template>
+      </td>
+      <td>攻击间隔
+        <input *ngIf="isEdit;else cooldownBlock" class="form-control" [(ngModel)]="cat.cooldown" [style.width]="getGeneralWidth()">
+        <ng-template #cooldownBlock>
+          <span class="dataMsg">{{cat.cooldown}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td>攻击方式
+        <select *ngIf="isEdit;else ATBlock" class="form-control" [(ngModel)]="cat.attackType">
+          <option value="单体">单体</option>
+          <option value="范围">范围</option>
+        </select>
+        <ng-template #ATBlock>
+          <span class="dataMsg">{{cat.attackType}}</span>
+        </ng-template>
+      </td>
+      <td>花费
+        <input *ngIf="isEdit;else costBlock" type="number" class="form-control" [(ngModel)]="cat.cost" [style.width]="getGeneralWidth()">
+        <ng-template #costBlock>
+          <span class="dataMsg">{{cat.cost}}</span>
+        </ng-template>
+      </td>
+      <td>生产时间
+        <input *ngIf="isEdit;else cdBlock" class="form-control" [(ngModel)]="cat.cd" [style.width]="getGeneralWidth()">
+        <ng-template #cdBlock>
+          <span class="dataMsg">{{cat.cd}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">特性
+        <textarea *ngIf="isEdit;else skillBlock" class="form-control" [(ngModel)]="cat.skill" style="width:100%"></textarea>
+        <ng-template #skillBlock>
+          <span class="dataMsg">{{cat.skill}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">开放条件
+        <textarea *ngIf="isEdit;else getConditionBlock" class="form-control" [(ngModel)]="cat.getCondition" style="width:100%"></textarea>
+        <ng-template #getConditionBlock>
+          <span class="dataMsg">{{cat.getCondition}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">对敌
+        <ng-container *ngIf="isEdit;else AEBlock">
+          <span>
+            <input type="checkbox" class="checkbox" (change)="catAntiEnemyCheckAll(catAntiEnemyCheckAllBox.checked,i)" #catAntiEnemyCheckAllBox> 全选
+            <span *ngFor="let catAntiEnemy of catAntiEnemiesArr[i]">
+              <button class="btn" [class.clicked]="catAntiEnemy.isChecked" (click)="catAntiEnemy.isChecked = !catAntiEnemy.isChecked">{{catAntiEnemy.antiEnemyDescribe}}</button>&nbsp;
+            </span>
+          </span>
+        </ng-container>
+        <ng-template #AEBlock>
+          <span *ngFor="let antiEnemyDescribe of cat.antiEnemyDescribeArr;index as j">
+            <a class="hyperlink" routerLink="/cat-list-data/antiEnemy/{{cat.antiEnemyArr[j]}}">{{antiEnemyDescribe}}</a>&nbsp;
+          </span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">特性类别
+        <ng-container *ngIf="isEdit;else STBlock">
+          <span>
+            <input type="checkbox" class="checkbox" (change)="catSkillTypeCheckAll(catSkillTypeCheckAllBox.checked,i)" #catSkillTypeCheckAllBox> 全选
+            <span *ngFor="let catSkillType of catSkillTypesArr[i]">
+              <button class="btn" [class.clicked]="catSkillType.isChecked" (click)="catSkillType.isChecked = !catSkillType.isChecked" style="margin-bottom:5px">{{catSkillType.skillTypeDescribe}}</button>&nbsp;
+            </span>
+          </span>
+        </ng-container>
+        <ng-template #STBlock>
+          <span *ngFor="let skillTypeDescribe of cat.skillTypeDescribeArr;index as j">
+            <a class="hyperlink" routerLink="/cat-list-data/skillType/{{cat.skillTypeArr[j]}}">{{skillTypeDescribe}}</a>&nbsp;
+          </span>
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+</div>

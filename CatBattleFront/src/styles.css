@@ -1,0 +1,54 @@
+/* You can add global styles to this file, and also import other style files */
+html {
+    padding: 0 10px;
+    box-sizing:border-box;
+}
+
+* {
+    color:black;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.generalMsg {
+    color:purple;
+    font-weight: bold;
+}
+
+.errorMsg {
+    color:red;
+    font-weight: bold;
+}
+
+.dataMsg {
+    color:#00ffde;
+    font-weight: normal;
+}
+
+.hyperlink {
+    color:#030080;
+}
+
+.hyperlink:hover {
+    font-weight: bold;
+    color:black;
+}
+
+.selectButton {
+    background-color:#48e215;
+    border-color:black;
+    color:black;
+}
+
+.selectButton:hover {
+    background-color:#0037ff;
+}
+
+.category {
+    width: 20px;
+    margin: 0 auto;
+    line-height: 16px;
+    font-size: 14px;
+}

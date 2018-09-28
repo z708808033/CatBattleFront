@@ -1,0 +1,19 @@
+<div>
+  <table class="table table-bordered" >
+    <tr align="center">
+      <td></td>
+      <td>敌人类型</td>
+      <td>敌人名称</td>
+    </tr>
+    <tr *ngIf="!enemies || enemies == ''">
+      <td colspan="3" align="center">
+          <font class="generalMsg">没有查询到敌人</font>
+      </td>
+    </tr>
+    <tr align="center" *ngFor="let enemy of enemies">
+      <td><a class="hyperlink" routerLink="/enemy-detail/{{enemy.enemyId}}"><img [src]="enemy.img"/></a></td>
+      <td><span *ngFor="let c of enemy.categoryDescribeArr;index as i"><a class="hyperlink" routerLink="/enemy-list-data/category/{{enemy.categoryArr[i]}}">{{enemy.categoryDescribeArr[i]}}</a>&nbsp;</span></td>
+      <td><a class="hyperlink" routerLink="/enemy-detail/{{enemy.enemyId}}">{{enemy.enemyName}} {{enemy.alias}}</a></td>
+    </tr>
+  </table>
+</div>

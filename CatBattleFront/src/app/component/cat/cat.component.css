@@ -1,0 +1,26 @@
+.nav {
+    background-color: black;
+    height: 50px;
+    border-radius:10px;
+}
+
+span {
+    margin-left: 20px;
+}
+
+.beforeClicked {
+    padding:0px 30px;
+    background-color: black;
+    line-height:50px;
+    border: 0px;
+    color: grey;
+}
+
+button:hover {
+    background-color: rgb(216, 199, 199);
+    color: black;
+}
+
+.isClicked {
+    background-color: rgb(216, 199, 199);
+}

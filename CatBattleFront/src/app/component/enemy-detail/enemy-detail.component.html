@@ -1,0 +1,149 @@
+<div align="center">
+  <h4 style="font-weight:bold">敌人详情</h4>
+  <div *ngIf="isAdmin">
+    <span *ngIf="isEdit">
+      <button class="btn btn-primary btn-sm" (click)="save()">保存</button>
+    </span>&nbsp;
+    <span *ngIf="isEdit">
+      <button class="btn btn-primary btn-sm" (click)="cancel()">取消</button>
+    </span>
+    <span *ngIf="!isEdit">
+      <button class="btn btn-primary btn-sm" (click)="beginEdit()">修改</button>
+    </span>
+  </div>
+</div>
+<div>
+  <table class="table table-bordered form-inline">
+    <tr align="center">
+      <td style="width:500px">敌人名称</td>
+      <td colspan="3">详细信息（30F = 1秒）</td>
+    </tr>
+    <tr>
+      <td rowspan="5" align="center">
+        <div>
+          <img [src]="enemy.img">
+        </div>
+        <div>
+          <span class="dataMsg">{{enemy.enemyName}}</span>
+        </div>
+        <div>
+          <input *ngIf="isEdit;else aliasBlock" class="form-control" [(ngModel)]="enemy.alias" value="enemy.alias" placeholder="别名">
+          <ng-template #aliasBlock>
+            <span class="dataMsg">{{enemy.alias}}</span>
+          </ng-template>
+        </div>
+        <div>
+          <ng-container *ngIf="isEdit;else categoryBlock">
+            <span>
+              <span *ngFor="let enemyCategory of enemyCategories">
+                <button class="btn" [class.clicked]="enemyCategory.isChecked" (click)="enemyCategory.isChecked = !enemyCategory.isChecked"
+                  style="margin-bottom:5px">{{enemyCategory.categoryDescribe}}</button>&nbsp;
+              </span>
+            </span>
+          </ng-container>
+          <ng-template #categoryBlock>
+            <span *ngFor="let c of enemy.categoryDescribeArr;index as i">
+              <a class="hyperlink" routerLink="/enemy-list-data/category/{{enemy.categoryArr[i]}}">{{enemy.categoryDescribeArr[i]}} </a>
+            </span>
+          </ng-template>
+        </div>
+        <div>强化倍率</div>
+        <div *ngIf="isEdit;else currentPowerUpRateBlock">
+          {{enemy.currentPowerUpRate}} 倍
+        </div>
+        <ng-template #currentPowerUpRateBlock>
+          <div>
+            <input type="number" class="form-control" [(ngModel)]="enemy.currentPowerUpRate" value="enemy.currentPowerUpRate" [style.width]="getCLWidth()"
+              (input)="resetEnemyAttackAndHP()"> 倍
+          </div>
+        </ng-template>
+      </td>
+      <td>体力
+        <input *ngIf="isEdit;else HPBlock" type="number" class="form-control" [(ngModel)]="enemy.currentHp" [style.width]="getGeneralWidth()">
+        <ng-template #HPBlock>
+          <span class="dataMsg">{{enemy.currentHp}}</span>
+        </ng-template>
+      </td>
+      <td>KB
+        <input *ngIf="isEdit;else KBBlock" type="number" class="form-control" [(ngModel)]="enemy.kb" [style.width]="getGeneralWidth()">
+        <ng-template #KBBlock>
+          <span class="dataMsg">{{enemy.kb}}</span>
+        </ng-template>
+      </td>
+      <td>前摇F
+        <input *ngIf="isEdit;else AABlock" type="number" class="form-control" [(ngModel)]="enemy.attackAnimation" [style.width]="getGeneralWidth()">
+        <ng-template #AABlock>
+          <span class="dataMsg">{{enemy.attackAnimation}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td>攻击力
+        <input *ngIf="isEdit;else attackBlock" type="number" class="form-control" [(ngModel)]="enemy.attackAnimation" [style.width]="getGeneralWidth()">
+        <ng-template #attackBlock>
+          <span class="dataMsg">{{enemy.currentAttack}}</span>
+        </ng-template>
+      </td>
+      <td>速度
+        <input *ngIf="isEdit;else speedBlock" type="number" class="form-control" [(ngModel)]="enemy.speed" [style.width]="getGeneralWidth()">
+        <ng-template #speedBlock>
+          <span class="dataMsg">{{enemy.speed}}</span>
+        </ng-template>
+      </td>
+      <td>攻击间隔F
+        <input *ngIf="isEdit;else cooldownBlock" type="number" class="form-control" [(ngModel)]="enemy.cooldown" [style.width]="getGeneralWidth()">
+        <ng-template #cooldownBlock>
+          <span class="dataMsg">{{enemy.cooldown}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td>攻击方式
+        <select *ngIf="isEdit;else ATBlock" class="form-control" [(ngModel)]="enemy.attackType">
+          <option value="单体">单体</option>
+          <option value="范围">范围</option>
+        </select>
+        <ng-template #ATBlock>
+          <span class="dataMsg">{{enemy.attackType}}</span>
+        </ng-template>
+      </td>
+      <td>射程
+        <input *ngIf="isEdit;else ADBlock" type="number" class="form-control" [(ngModel)]="enemy.attackDistance" [style.width]="getGeneralWidth()">
+        <ng-template #ADBlock>
+          <span class="dataMsg">{{enemy.attackDistance}}</span>
+        </ng-template>
+      </td>
+      <td>击杀赏金
+        <input *ngIf="isEdit;else rewardBlock" type="number" class="form-control" [(ngModel)]="enemy.reward" [style.width]="getGeneralWidth()">
+        <ng-template #rewardBlock>
+          <span class="dataMsg">{{enemy.reward}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">特性
+        <textarea *ngIf="isEdit;else skillBlock" class="form-control" [(ngModel)]="enemy.skill" value="enemy.skill" style="width:100%"></textarea>
+        <ng-template #skillBlock>
+          <span class="dataMsg">{{enemy.skill}}</span>
+        </ng-template>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">特性类别
+        <ng-container *ngIf="isEdit;else STBlock">
+          <span>
+            <input type="checkbox" class="checkbox" (change)="enemySkillTypeCheckAll(enemySkillTypeCheckAllBox.checked)" #enemySkillTypeCheckAllBox> 全选
+            <span *ngFor="let enemySkillType of enemySkillTypes">
+              <button class="btn" [class.clicked]="enemySkillType.isChecked" (click)="enemySkillType.isChecked = !enemySkillType.isChecked" style="margin-bottom:5px">{{enemySkillType.skillTypeDescribe}}</button>&nbsp;
+            </span>
+          </span>
+        </ng-container>
+        <ng-template #STBlock>
+          <span *ngFor="let skillTypeDescribe of enemy.skillTypeDescribeArr;index as i">
+            <a class="hyperlink" routerLink="/enemy-list-data/skillType/{{enemy.skillTypeArr[i]}}">{{enemy.skillTypeDescribeArr[i]}}</a>&nbsp;
+          </span>
+        </ng-template>
+      </td>
+    </tr>
+  </table>
+</div>

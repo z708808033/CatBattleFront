@@ -1,0 +1,8 @@
+.checkbox {
+    height: 20px;
+    width: 20px;
+}
+
+.clicked {
+    background-color: yellowgreen;
+}

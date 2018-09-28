@@ -1,0 +1,6 @@
+<h2 align="center" class="title">敌人查询</h2>
+<div class="form-group" style="margin-bottom: 10px">
+    <input type="text" class="form-control" placeholder="请输入敌人的一部分名称" [(ngModel)]="enemyName" [style.width]="getENWidth()">
+    <button type="button" class="btn btn-primary" style="margin-top: 10px" (click)="getEnemiesByEnemyName()" [disabled]="isDisabled()">查询</button>
+</div>
+<app-enemy-list-data [enemies]="enemies"></app-enemy-list-data>

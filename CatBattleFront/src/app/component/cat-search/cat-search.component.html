@@ -1,0 +1,6 @@
+<h2 align="center" class="title">喵咪查询</h2>
+<div class="form-group" style="margin-bottom: 10px">
+    <input type="text" class="form-control" placeholder="请输入喵咪的一部分名称" [style.width]="getCNWidth()" [(ngModel)]="catName">
+    <button type="button" class="btn btn-primary" style="margin-top: 10px" (click)="getCatsByCatName()" [disabled]="isDisabled()">查询</button>
+</div>
+<app-cat-list-data [cats]="cats"></app-cat-list-data>

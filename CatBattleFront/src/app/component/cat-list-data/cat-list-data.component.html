@@ -1,0 +1,19 @@
+<div>
+  <table class="table table-bordered" >
+    <tr align="center">
+      <td></td>
+      <td>喵咪类型</td>
+      <td>喵咪名称</td>
+    </tr>
+    <tr *ngIf="!cats || cats == ''">
+      <td colspan="3" align="center">
+          <font class="generalMsg">没有查询到喵咪</font>
+      </td>
+    </tr>
+    <tr align="center" *ngFor="let cat of cats">
+      <td><a class="hyperlink" routerLink="/cat-detail/{{cat.catId}}"><img [src]="cat.img"/></a></td>
+      <td><a class="hyperlink" routerLink="/cat-list-data/category/{{cat.category}}">{{cat.categoryDescribe}}</a></td>
+      <td><a class="hyperlink" routerLink="/cat-detail/{{cat.catId}}">{{cat.catName}} {{cat.alias}}</a></td>
+    </tr>
+  </table>
+</div>

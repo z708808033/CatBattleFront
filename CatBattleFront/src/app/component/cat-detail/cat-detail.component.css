@@ -1,0 +1,12 @@
+div {
+    margin-bottom: 10px;
+}
+
+.clicked {
+    background-color: yellowgreen;
+}
+
+.checkbox {
+    height: 20px;
+    width: 20px;
+}
