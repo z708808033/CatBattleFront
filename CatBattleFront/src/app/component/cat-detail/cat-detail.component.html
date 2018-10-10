@@ -32,7 +32,7 @@
           </ng-template>
         </div>
         <div>
-          <input *ngIf="isEdit;else aliasBlock" class="form-control" [(ngModel)]="cat.alias" placeholder="别名" [style.width]="getGeneralWidth()">
+          <input *ngIf="isEdit;else aliasBlock" class="form-control" [(ngModel)]="cat.alias" placeholder="别名">
           <ng-template #aliasBlock>
             <span class="dataMsg">{{cat.alias}}</span>
           </ng-template>

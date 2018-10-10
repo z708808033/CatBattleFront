@@ -11,6 +11,7 @@ import { EnemyListDataComponent } from '../component/enemy-list-data/enemy-list-
 import { EnemyDetailComponent } from '../component/enemy-detail/enemy-detail.component';
 import { EnemySearchComponent } from '../component/enemy-search/enemy-search.component';
 import { CatAddComponent } from '../component/cat-add/cat-add.component';
+import { EnemyAddComponent } from '../component/enemy-add/enemy-add.component';
 
 const routes: Routes = [
   { path: 'cat', component: CatComponent},
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'enemy-list-data/skillType/:skillType', component: EnemyListDataComponent},
   { path: 'enemy-detail/:enemyId', component: EnemyDetailComponent},
   { path: 'enemy-search', component: EnemySearchComponent},
+  { path: 'enemy-add', component: EnemyAddComponent},
 ];
 
 

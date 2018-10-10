@@ -10,7 +10,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class EnemyService {
-  url = "http://192.168.1.2:8080/java/enemy";
+  url = "http://localhost:8080/java/enemy";
 
   constructor(private http: HttpClient) { }
 
@@ -67,5 +67,22 @@ export class EnemyService {
     enemy.currentPowerUpRate = enemy.powerUpRate;
     enemy.currentHp = enemy.hp;
     enemy.currentAttack = enemy.attack;
+  }
+
+  previewEnemy(enemyId : string) : Observable<any> {
+    let getUrl = `${this.url}/previewEnemy/${enemyId}`;
+    return this.http.get(getUrl).pipe(tap(enemy => this.dealBeforePreview(enemy)));
+  }
+
+  dealBeforePreview(enemy: any) {
+    enemy.hp = enemy.hp.replace(",", "");
+    enemy.attack = enemy.attack.replace(",", "");
+    enemy.attackDistance = enemy.attackDistance.replace(",", "");
+    enemy.reward = enemy.reward.replace(",", "");
+  }
+
+  saveEnemy(enemy : any) {
+    let postUrl = `${this.url}/saveEnemy`;
+    return this.http.post(postUrl, enemy, { responseType: 'text' });
   }
 }

@@ -1,128 +1,147 @@
-<h2 align="center" class="title">喵咪新增</h2>
-<div class="form-group" style="margin-bottom: 10px;display:flex">
-  <input type="text" class="form-control" placeholder="请输入喵咪ID" [style.width]="getCNWidth()" [(ngModel)]="catId" #catIdInput/>
-  <button class="btn btn-primary" (click)="previewCat()" [disabled]="isDisabled()" style="margin-left: 10px">预览</button>
-</div>
-<div *ngIf="cat">
-  <table class="table table-bordered form-inline">
-    <tr align="center">
-      <td style="width:300px">
-        <div>喵咪名称</div>
-      </td>
-      <td colspan="3" style="width:900px">详细信息</td>
-    </tr>
-    <tr>
-      <td rowspan="8" align="center">
-        <div>
-          <button class="btn btn-primary" (click)="uploadImg()">上传图片</button>
-        </div>
-        <div>喵咪名称
-          <input class="form-control" [(ngModel)]="cat.catName" />
-        </div>
-        <div>喵咪别名
-          <input class="form-control" [(ngModel)]="cat.alias" />
-        </div>
-        <div>喵咪类型
-          <input class="form-control" [(ngModel)]="cat.categoryDescribe" />
-        </div>
-        <div>默认等级
-          <input class="form-control" [(ngModel)]="cat.defaultLevel" />
-        </div>
-        <div>最高等级
-          <input class="form-control" [(ngModel)]="cat.maxLevel" />
-        </div>
-      </td>
-      <td>
-        体力 0级时候的体力为
-        <input type="number" class="form-control" [(ngModel)]="cat.basicHp" value="cat.basicHp" [style.width]="getBHWidth()" />&nbsp;
-        <input type="number" class="form-control" [(ngModel)]="cat.hpLevel" value="cat.hpLevel" [style.width]="getBHWidth()" /> 级(包含本级)之前增幅为
-        <input type="number" class="form-control" [(ngModel)]="cat.hpBefore" value="cat.hpBefore" [style.width]="getBHWidth()" /> 之后增幅为
-        <input type="number" class="form-control" [(ngModel)]="cat.hpAfter" value="cat.hpAfter" [style.width]="getBHWidth()" /> 默认等级体力为
-        <input type="number" class="form-control" [(ngModel)]="cat.hp" [style.width]="getHPAndAttackWidth()" />
-      </td>
-      <td>KB
-        <input type="number" class="form-control" [(ngModel)]="cat.kb" [style.width]="getGeneralWidth()" />
-      </td>
-      <td>攻速
-        <input class="form-control" [(ngModel)]="cat.attackRate" [style.width]="getGeneralWidth()" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        攻击力 0级时候的攻击力为
-        <input type="number" class="form-control" [(ngModel)]="cat.basicAttack" value="cat.basicAttack" [style.width]="getBAWidth()"
-        />&nbsp;
-        <input type="number" class="form-control" [(ngModel)]="cat.attackLevel" value="cat.attackLevel" [style.width]="getBAWidth()"
-        /> 级(包含本级)之前增幅为
-        <input type="number" class="form-control" [(ngModel)]="cat.attackBefore" value="cat.attackBefore" [style.width]="getBAWidth()"
-        /> 之后增幅为
-        <input type="number" class="form-control" [(ngModel)]="cat.attackAfter" value="cat.attackAfter" [style.width]="getBAWidth()"
-        /> 默认等级攻击力为
-        <input type="number" class="form-control" [(ngModel)]="cat.attack" [style.width]="getHPAndAttackWidth()" />
-      </td>
-      <td>速度
-        <input type="number" class="form-control" [(ngModel)]="cat.speed" [style.width]="getGeneralWidth()" />
-      </td>
-      <td>前摇
-        <input class="form-control" [(ngModel)]="cat.attackAnimation" [style.width]="getGeneralWidth()" />
-      </td>
-    </tr>
-    <tr>
-      <td>DPS
-        <span>暂定</span>
-      </td>
-      <td>射程
-        <input type="number" class="form-control" [(ngModel)]="cat.attackDistance" [style.width]="getGeneralWidth()" />
-      </td>
-      <td>攻击间隔
-        <input class="form-control" [(ngModel)]="cat.cooldown" [style.width]="getGeneralWidth()" />
-      </td>
-    </tr>
-    <tr>
-      <td>攻击方式
-        <input class="form-control" [(ngModel)]="cat.attackType" [style.width]="getGeneralWidth()" />
-      </td>
-      <td>花费
-        <input type="number" class="form-control" [(ngModel)]="cat.cost" [style.width]="getGeneralWidth()" />
-      </td>
-      <td>生产时间
-        <input class="form-control" [(ngModel)]="cat.cd" [style.width]="getGeneralWidth()" />
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3">特性
-        <textarea class="form-control" [(ngModel)]="cat.skill" style="width:100%"></textarea>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3">开放条件
-        <textarea class="form-control" [(ngModel)]="cat.getCondition" style="width:100%"></textarea>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3">
-        对敌
-        <span>
-          <input type="checkbox" class="checkbox" (change)="catAntiEnemyCheckAll(catAntiEnemyCheckAllBox.checked)" #catAntiEnemyCheckAllBox/> 全选
-          <span *ngFor="let catAntiEnemy of catAntiEnemies">
-            <button class="btn" [class.clicked]="catAntiEnemy.isChecked" (click)="catAntiEnemy.isChecked = !catAntiEnemy.isChecked">{{catAntiEnemy.antiEnemyDescribe}}</button>&nbsp;
+<div style="position:relative">
+  <h2 align="center" class="title">喵咪新增</h2>
+  <div class="form-group" style="margin-bottom: 10px;display:flex">
+    <input type="text" class="form-control" placeholder="请输入喵咪ID" [style.width]="getCIWidth()" [(ngModel)]="catId">
+    <button class="btn btn-primary" (click)="isPreview = true;previewCat()" [disabled]="isDisabled()" style="margin-left: 10px">预览</button>
+  </div>
+
+  <span *ngIf="isPreview" class="loading_msg">正在加载中...</span>
+  <span *ngIf="isSaving" class="loading_msg">正在保存中...</span>
+
+  <div *ngIf="cat">
+    <table class="table table-bordered form-inline">
+      <tr align="center">
+        <td style="width:300px">
+          <div>喵咪名称</div>
+        </td>
+        <td colspan="3">详细信息</td>
+      </tr>
+      <tr>
+        <td rowspan="8" align="center">
+          <div>
+            <button class="btn" (click)="fileUploadBlock.click()">选择文件</button>{{fileItem?.file.name}} <br>
+            <input id="upload_input" type="file" value="选择文件" ng2FileSelect [uploader]="uploader" style="display:none"
+              #fileUploadBlock>
+            <button class="btn btn-primary" (click)="uploadImg(cat.img)" [disabled]="!fileItem">上传图片</button>
+          </div>
+          <div *ngIf="catImg">
+            <img [src]="catImg">
+          </div>
+          <div>喵咪名称
+            <input class="form-control" [(ngModel)]="cat.catName">
+          </div>
+          <div>喵咪别名
+            <input class="form-control" [(ngModel)]="cat.alias">
+          </div>
+          <div>喵咪类型
+            <input class="form-control" [(ngModel)]="cat.categoryDescribe">
+          </div>
+          <div>默认等级
+            <input class="form-control" [(ngModel)]="cat.defaultLevel">
+          </div>
+          <div>最高等级
+            <input class="form-control" [(ngModel)]="cat.maxLevel">
+          </div>
+        </td>
+        <td style="width:60%">
+          体力 0级时候的体力为
+          <input type="number" class="form-control" [(ngModel)]="cat.basicHp" [style.width]="getBHWidth()">&nbsp;
+          <input type="number" class="form-control" [(ngModel)]="cat.hpLevel" [style.width]="getBHWidth()">
+          级(包含本级)之前增幅为
+          <input type="number" class="form-control" [(ngModel)]="cat.hpBefore" [style.width]="getBHWidth()">
+          之后增幅为
+          <input type="number" class="form-control" [(ngModel)]="cat.hpAfter" [style.width]="getBHWidth()">
+          默认等级体力为
+          <input type="number" class="form-control" [(ngModel)]="cat.hp" [style.width]="getHPAndAttackWidth()">
+        </td>
+        <td>KB
+          <input type="number" class="form-control" [(ngModel)]="cat.kb" [style.width]="getGeneralWidth()">
+        </td>
+        <td>攻速
+          <input class="form-control" [(ngModel)]="cat.attackRate" [style.width]="getGeneralWidth()">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          攻击力 0级时候的攻击力为
+          <input type="number" class="form-control" [(ngModel)]="cat.basicAttack" [style.width]="getBAWidth()">&nbsp;
+          <input type="number" class="form-control" [(ngModel)]="cat.attackLevel" [style.width]="getBAWidth()">
+          级(包含本级)之前增幅为
+          <input type="number" class="form-control" [(ngModel)]="cat.attackBefore" [style.width]="getBAWidth()">
+          之后增幅为
+          <input type="number" class="form-control" [(ngModel)]="cat.attackAfter" [style.width]="getBAWidth()">
+          默认等级攻击力为
+          <input type="number" class="form-control" [(ngModel)]="cat.attack" [style.width]="getHPAndAttackWidth()">
+        </td>
+        <td>速度
+          <input type="number" class="form-control" [(ngModel)]="cat.speed" [style.width]="getGeneralWidth()">
+        </td>
+        <td>前摇
+          <input class="form-control" [(ngModel)]="cat.attackAnimation" [style.width]="getGeneralWidth()">
+        </td>
+      </tr>
+      <tr>
+        <td>DPS
+        </td>
+        <td>射程
+          <input type="number" class="form-control" [(ngModel)]="cat.attackDistance" [style.width]="getGeneralWidth()">
+        </td>
+        <td>攻击间隔
+          <input class="form-control" [(ngModel)]="cat.cooldown" [style.width]="getGeneralWidth()">
+        </td>
+      </tr>
+      <tr>
+        <td>攻击方式
+          <select class="form-control" [(ngModel)]="cat.attackType">
+            <option value="单体">单体</option>
+            <option value="范围">范围</option>
+          </select>
+        </td>
+        <td>花费
+          <input type="number" class="form-control" [(ngModel)]="cat.cost" [style.width]="getGeneralWidth()">
+        </td>
+        <td>生产时间
+          <input class="form-control" [(ngModel)]="cat.cd" [style.width]="getGeneralWidth()">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">特性
+          <textarea class="form-control" [(ngModel)]="cat.skill" style="width:100%"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">开放条件
+          <textarea class="form-control" [(ngModel)]="cat.getCondition" style="width:100%"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          对敌
+          <span>
+            <input type="checkbox" class="checkbox" (change)="catAntiEnemyCheckAll(catAntiEnemyCheckAllBox.checked)"
+              #catAntiEnemyCheckAllBox> 全选
+            <span *ngFor="let catAntiEnemy of catAntiEnemies">
+              <button class="btn" [class.clicked]="catAntiEnemy.isChecked" (click)="catAntiEnemy.isChecked = !catAntiEnemy.isChecked">{{catAntiEnemy.antiEnemyDescribe}}</button>&nbsp;
+            </span>
           </span>
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3">
-        特性类别
-        <span>
-          <input type="checkbox" class="checkbox" (change)="catSkillTypeCheckAll(catSkillTypeCheckAllBox.checked)" #catSkillTypeCheckAllBox/> 全选
-          <span *ngFor="let catSkillType of catSkillTypes">
-            <button class="btn" [class.clicked]="catSkillType.isChecked" (click)="catSkillType.isChecked = !catSkillType.isChecked" style="margin-bottom:5px">{{catSkillType.skillTypeDescribe}}</button>&nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          特性类别
+          <span>
+            <input type="checkbox" class="checkbox" (change)="catSkillTypeCheckAll(catSkillTypeCheckAllBox.checked)"
+              #catSkillTypeCheckAllBox> 全选
+            <span *ngFor="let catSkillType of catSkillTypes">
+              <button class="btn" [class.clicked]="catSkillType.isChecked" (click)="catSkillType.isChecked = !catSkillType.isChecked"
+                style="margin-bottom:5px">{{catSkillType.skillTypeDescribe}}</button>&nbsp;
+            </span>
           </span>
-        </span>
-      </td>
-    </tr>
-  </table>
-  <div align="center">
-    <button class="btn btn-primary" (click)="saveCat()">保存</button>
+        </td>
+      </tr>
+    </table>
+    <div align="center">
+      <button class="btn btn-primary" (click)="isSaving = true;saveCat()">保存</button>
+    </div>
   </div>
 </div>

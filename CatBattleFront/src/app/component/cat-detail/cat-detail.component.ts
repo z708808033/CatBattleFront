@@ -19,6 +19,7 @@ export class CatDetailComponent implements OnInit {
   catAntiEnemiesArr: CatAntiEnemy[][] = [];
   catSkillTypesArr: CatSkillType[][] = [];
   catCategories: CatCategory[];
+  isShow:boolean = true;
 
   constructor(private route: ActivatedRoute, private catSV: CatService, private generalSV: GeneralService) {
   }
@@ -36,11 +37,10 @@ export class CatDetailComponent implements OnInit {
         _this.cats = cats;
         for (let i = 0; i < _this.cats.length; i++) {
           _this.catAntiEnemiesArr[i] = _this.generalSV.getCatAntiEnemies();
-          _this.catAntiEnemiesArr[i].forEach(catAntiEnemy => catAntiEnemy.isChecked = _this.cats[i].antiEnemy.indexOf(catAntiEnemy.antiEnemy) >= 0);
+          _this.catAntiEnemiesArr[i].map(catAntiEnemy => catAntiEnemy.isChecked = _this.cats[i].antiEnemy.indexOf(catAntiEnemy.antiEnemy) >= 0);
           _this.catSkillTypesArr[i] = _this.generalSV.getCatSkillTypes();
-          _this.catSkillTypesArr[i].forEach(catSkillType => catSkillType.isChecked = _this.cats[i].skillType.indexOf(catSkillType.skillType) >= 0);
+          _this.catSkillTypesArr[i].map(catSkillType => catSkillType.isChecked = _this.cats[i].skillType.indexOf(catSkillType.skillType) >= 0);
         }
-
       }
     });
   }

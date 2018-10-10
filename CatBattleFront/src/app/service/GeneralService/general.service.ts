@@ -12,6 +12,7 @@ const navigateDatas: NavigateData[] = [
   {id:3,showinfo:"喵咪新增",isClicked:false,link:"/cat-add",bgImg:""},
   {id:4,showinfo:"敌人列表",isClicked:false,link:"/enemy-list",bgImg:""},
   {id:5,showinfo:"敌人查询",isClicked:false,link:"/enemy-search",bgImg:""},
+  {id:6,showinfo:"敌人新增",isClicked:false,link:"/enemy-add",bgImg:""},
 ];
 
 const catCategories: CatCategory[] = [
@@ -106,7 +107,7 @@ export class GeneralService {
       {id:5,category:"metal",categoryDescribe:"钢铁",isChecked:false},{id:6,category:"angel",categoryDescribe:"天使",isChecked:false},
       {id:7,category:"alien",categoryDescribe:"外星",isChecked:false},{id:8,category:"zombie",categoryDescribe:"僵尸",isChecked:false},
       {id:9,category:"ancient",categoryDescribe:"古代",isChecked:false},{id:10,category:"witch",categoryDescribe:"魔女",isChecked:false},
-      {id:11,category:"shitu",categoryDescribe:"使徒",isChecked:false},{id:12,category:"alienWithStar",categoryDescribe:"外星(带星星)",isChecked:false},
+      {id:11,category:"shitu",categoryDescribe:"使徒",isChecked:false},{id:12,category:"alienWithStar",categoryDescribe:"外星(有星星)",isChecked:false},
       {id:13,category:"none",categoryDescribe:"无属性",isChecked:false},
     ];
   }

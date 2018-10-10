@@ -31,9 +31,9 @@ export class EnemyDetailComponent implements OnInit {
       next(enemy) {
         _this.enemy = enemy;
         _this.enemyCategories = _this.generalSV.getEnemyCategories();
-        _this.enemyCategories.forEach(enemyCategory => enemyCategory.isChecked = _this.enemy.category.indexOf(enemyCategory.category + ',') >= 0);
+        _this.enemyCategories.map(enemyCategory => enemyCategory.isChecked = _this.enemy.category.indexOf(enemyCategory.category + ',') >= 0);
         _this.enemySkillTypes = _this.generalSV.getEnemySkillTypes();
-        _this.enemySkillTypes.forEach(enemySkillType => enemySkillType.isChecked = _this.enemy.skillType.indexOf(enemySkillType.skillType) >= 0);
+        _this.enemySkillTypes.map(enemySkillType => enemySkillType.isChecked = _this.enemy.skillType.indexOf(enemySkillType.skillType) >= 0);
       }
     });
   }
@@ -43,7 +43,7 @@ export class EnemyDetailComponent implements OnInit {
   }
 
   enemySkillTypeCheckAll(isCheckAll) {
-    this.enemySkillTypes.forEach(e => e.isChecked = isCheckAll);
+    this.enemySkillTypes.map(e => e.isChecked = isCheckAll);
   }
 
   save() {
@@ -93,7 +93,7 @@ export class EnemyDetailComponent implements OnInit {
 
   getCLWidth(): string {
     if (this.generalSV.isPc()) {
-      return "8%";
+      return "20%";
     } else {
       return "100%";
     }

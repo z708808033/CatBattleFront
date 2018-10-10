@@ -1,0 +1,106 @@
+<div style="position:relative">
+  <h2 align="center" class="title">敌人新增</h2>
+  <div class="form-group" style="margin-bottom: 10px;display:flex">
+    <input type="text" class="form-control" placeholder="请输入敌人ID" [style.width]="getEIWidth()" [(ngModel)]="enemyId">
+    <button class="btn btn-primary" (click)="isPreview = true;previewEnemy()" [disabled]="isDisabled()" style="margin-left: 10px">预览</button>
+  </div>
+
+  <span *ngIf="isPreview" class="loading_msg">正在加载中...</span>
+  <span *ngIf="isSaving" class="loading_msg">正在保存中...</span>
+
+  <div *ngIf="enemy">
+    <table class="table table-bordered form-inline">
+      <tr align="center">
+        <td style="width:300px">
+          <div>敌人名称</div>
+        </td>
+        <td colspan="3">详细信息（30F = 1秒）</td>
+      </tr>
+      <tr>
+        <td rowspan="8" align="center">
+          <div>
+            <button class="btn" (click)="fileUploadBlock.click()">选择文件</button>{{fileItem?.file.name}} <br>
+            <input id="upload_input" type="file" value="选择文件" ng2FileSelect [uploader]="uploader" style="display:none"
+              #fileUploadBlock>
+            <button class="btn btn-primary" (click)="uploadImg(enemy.img)" [disabled]="!fileItem">上传图片</button>
+          </div>
+          <div *ngIf="enemyImg">
+            <img [src]="enemyImg">
+          </div>
+          <div>敌人名称
+            <input class="form-control" [(ngModel)]="enemy.enemyName">
+          </div>
+          <div>敌人别名
+            <input class="form-control" [(ngModel)]="enemy.alias">
+          </div>
+        </td>
+        <td>
+          体力
+          <input type="number" class="form-control" [(ngModel)]="enemy.hp" [style.width]="getGeneralWidth()">
+        </td>
+        <td>KB
+          <input type="number" class="form-control" [(ngModel)]="enemy.kb" [style.width]="getGeneralWidth()">
+        </td>
+        <td>前摇F
+          <input type="number" class="form-control" [(ngModel)]="enemy.attackAnimation" [style.width]="getGeneralWidth()">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          攻击力
+          <input type="number" class="form-control" [(ngModel)]="enemy.attack" [style.width]="getGeneralWidth()">
+        </td>
+        <td>速度
+          <input type="number" class="form-control" [(ngModel)]="enemy.speed" [style.width]="getGeneralWidth()">
+        </td>
+        <td>攻击间隔F
+          <input type="number" class="form-control" [(ngModel)]="enemy.cooldown" [style.width]="getGeneralWidth()">
+        </td>
+      </tr>
+      <tr>
+        <td>攻击方式
+          <select class="form-control" [(ngModel)]="enemy.attackType">
+            <option value="单体">单体</option>
+            <option value="范围">范围</option>
+          </select>
+        </td>
+        <td>射程
+          <input type="number" class="form-control" [(ngModel)]="enemy.attackDistance" [style.width]="getGeneralWidth()">
+        </td>
+        <td>击杀赏金
+          <input type="number" class="form-control" [(ngModel)]="enemy.reward" [style.width]="getGeneralWidth()">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">特性
+          <textarea class="form-control" [(ngModel)]="enemy.skill" style="width:100%"></textarea>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          特性类别
+          <span>
+            <input type="checkbox" class="checkbox" (change)="enemySkillTypeCheckAll(enemySkillTypeCheckAllBox.checked)"
+              #enemySkillTypeCheckAllBox> 全选
+            <span *ngFor="let enemySkillType of enemySkillTypes">
+              <button class="btn" [class.clicked]="enemySkillType.isChecked" (click)="enemySkillType.isChecked = !enemySkillType.isChecked"
+                style="margin-bottom:5px">{{enemySkillType.skillTypeDescribe}}</button>&nbsp;
+            </span>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          敌人类型
+          <span *ngFor="let enemyCategory of enemyCategories">
+            <button class="btn" [class.clicked]="enemyCategory.isChecked" (click)="enemyCategory.isChecked = !enemyCategory.isChecked"
+              style="margin-bottom:5px">{{enemyCategory.categoryDescribe}}</button>&nbsp;
+          </span>
+        </td>
+      </tr>
+    </table>
+    <div align="center">
+      <button class="btn btn-primary" (click)="isSaving = true;saveEnemy()">保存</button>
+    </div>
+  </div>
+</div>
